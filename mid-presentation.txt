@@ -1,0 +1,23 @@
+At each step s, choose the action a which maximizes the function Q(s, a)
+Q is the estimated state-value function ¨C it tells us how good an action is given a certain state 
+
+The goal of the agent is to maximize its total reward. It does this by learning which action is optimal for each state. The action that is optimal for each state is the action that has the highest long-term reward. This reward is a weighted sum of the expected values of the rewards of all future steps starting from the current state, where the weight for a step from a state t steps into the future is calculated as r^t. r is a number between 0 and 1 called the discount factor and trades off the importance of sooner versus later rewards. 
+Before learning has started, Q returns an (arbitrary) fixed value, chosen by the designer. Then, each time the agent selects an action, and observes a reward and a new state that may depend on both the previous state and the selected action, 
+Q is updated. The core of the algorithm is a simple value iteration update. It assumes the old value and makes a correction based on the new information. 
+
+
+Learning rate
+The learning rate or step size determines to what extent the newly acquired information will override the old information. A factor of 0 will make the agent not learn anything, while a factor of 1 would make the agent consider only the most recent information. In fully deterministic environments, a learning rate of 
+¦Á_t = 1 is optimal. When the problem is stochastic, the algorithm still converges under some technical conditions on the learning rate that require it to decrease to zero. In practice, often a constant learning rate is used, such as ¦Á t = 0.1 for all t.
+ 
+Discount factor
+The discount factor ¦Ã determines the importance of future rewards. A factor of 0 will make the agent "myopic" (or short-sighted) by only considering current rewards, while a factor approaching 1 will make it strive for a long-term high reward. If the discount factor meets or exceeds 1, the action values may diverge. For ¦Ã = 1 , without a terminal state, or if the agent never reaches one, all environment histories will be infinitely long, and utilities with additive, undiscounted rewards will generally be infinite.[2] Even with a discount factor only slightly lower than 1, the Q-function learning leads to propagation of errors and instabilities when the value function is approximated with an artificial neural network.[3] In that case, it is known that starting with a lower discount factor and increasing it towards its final value yields accelerated learning.
+
+Initial conditions (Q0)
+Since Q-learning is an iterative algorithm, it implicitly assumes an initial condition before the first update occurs. High initial values, also known as "optimistic initial conditions",[5] can encourage exploration: no matter what action is selected, the update rule will cause it to have lower values than the other alternative, thus increasing their choice probability. Recently, it was suggested that the first reward r could be used to reset the initial conditions.[citation needed] According to this idea, the first time an action is taken the reward is used to set the value of Q. This will allow immediate learning in case of fixed deterministic rewards. Surprisingly, this resetting-of-initial-conditions (RIC) approach seems to be consistent with human behaviour in repeated binary choice experiments.
+
+
+
+
+Taxi-v2
+There are 4 locations (labeled by different letters) and your job is to pick up the passenger at one location and drop him off in another. The agent will receive +20 points for a successful dropoff, and lose 1 point for every timestep it takes. There is also a 10 point penalty for illegal pick-up and drop-off actions.Taxi-v2 defines "solving" as getting average reward of 9.7 over 100 consecutive trials. 
